@@ -1,0 +1,53 @@
+name: Sync organisation README
+
+# Keeps the plugin tables in the organisation README current so a released
+# version bump or a newly added plugin never lingers out of sync.
+#
+#   * Every 6 hours (with jitter): reads every plugin repo's manifest.json on
+#     its published default branch and rewrites the tables if anything moved.
+#   * workflow_dispatch: run right now from the Actions tab.
+#   * repository_dispatch (plugin-published): a plugin repo can ping this
+#     immediately by dispatching:
+#       gh api -X POST repos/Omarchy-plugin/.github/dispatches \
+#         -f event_type=plugin-published -f client_payload[repo]=myles-xyz
+#     (the caller needs a token with repo scope on the .github repository).
+#
+# Note: GitHub pauses scheduled workflows after ~60 days of repo inactivity.
+# Any dispatch run re-enables the schedule.
+
+on:
+  schedule:
+    - cron: "23 */6 * * *"
+  workflow_dispatch: {}
+  repository_dispatch:
+    types: [plugin-published]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-org-readme
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Regenerate plugin tables
+        run: python3 tools/sync_readme.py
+
+      - name: Commit and push when changed
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- README.md; then
+            echo "README is up to date."
+            exit 0
+          fi
+          git diff -- README.md
+          git config user.name "org-readme-sync[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Sync organisation README with published plugin versions"
+          git push
