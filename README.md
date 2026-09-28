@@ -39,7 +39,7 @@ omarchy plugin add https://github.com/Omarchy-plugin/myles-clock.git --enable --
 | [myles-clock](./myles-clock) | 1.0.0 | `omarchy.clock` | Calendar clock with merged world-clock places, holiday markers, custom formats |
 | [myles-network](./myles-network) | 2.9.0 | `omarchy.network` | Subnet warnings, resilient IPv4 recovery, profile backups, usage totals, Proton VPN |
 | [myles-agents](./myles-agents) | 1.3.0 | `omarchy.agents` | Every installed coding agent ranked by token usage, with trends and one-click launch |
-| [omarchy-myles-media](./omarchy-myles-media) | 1.11.0 | `omarchy.media` | Media hub: Spotify, YouTube, Radio Garden, local files, video PiP, downloads, casting |
+| [omarchy-myles-media](./omarchy-myles-media) | 1.12.0 | `omarchy.media` | Media hub: Spotify, YouTube, Radio Garden, local files, video PiP, downloads, casting |
 | [myles-usage](./myles-usage) | 1.4.0 | — | Active/idle tracking, searchable reports, goals, focus insights, timers |
 | [myles-calculator](./myles-calculator) | 1.0.1 | — | Scientific, programmer, live FX, units, tip/VAT, history |
 | [myles-appearance-picker](./myles-appearance-picker) | 2.0.0 | — | Grouped theme and wallpaper picker |
