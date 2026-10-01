@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Keep the organisation README's plugin tables in sync with the org.
 
-For every repository in the Omarchy-plugin org that carries a manifest.json
-whose id starts with PREFIX, it rewrites the "The suite" table in README.md:
+For every repository in the Omarchy-plugin org that carries a valid
+Omarchy plugin manifest.json, it rewrites the "The suite" table in README.md:
 
   * existing rows keep their hand-curated description/replaces text, but get
     the live version from the repo's manifest.json on the published default
@@ -26,7 +26,6 @@ import sys
 import urllib.request
 
 ORG = os.environ.get("ORG", "Omarchy-plugin")
-PREFIX = os.environ.get("PREFIX", "myles.")
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 README = os.path.join(ROOT, "README.md")
 # Non-plugin repos in the org. Anything else without a manifest.json is
@@ -75,7 +74,15 @@ def collect_plugins():
             )
         except Exception:
             continue  # no manifest.json -> not a plugin repo
-        if not str(manifest.get("id", "")).startswith(PREFIX):
+        # Discover plugins by manifest shape rather than author-specific id
+        # prefix. This keeps newly added plugins from other contributors in
+        # the org visible in the README too, while skipping repos with
+        # unrelated JSON manifests.
+        if not (
+            str(manifest.get("id", "")).strip()
+            and str(manifest.get("version", "")).strip()
+            and isinstance(manifest.get("entryPoints"), dict)
+        ):
             continue
         plugins[name] = {
             "version": str(manifest.get("version", "")).strip(),

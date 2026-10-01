@@ -42,6 +42,8 @@ omarchy plugin add https://github.com/Omarchy-plugin/myles-clock.git --enable --
 | [omarchy-myles-media](./omarchy-myles-media) | 1.12.1 | `omarchy.media` | Media hub: Spotify, YouTube, Radio Garden, local files, video PiP, downloads, casting |
 | [myles-usage](./myles-usage) | 1.4.0 | — | Active/idle tracking, searchable reports, goals, focus insights, timers |
 | [myles-appearance-picker](./myles-appearance-picker) | 2.0.0 | — | Grouped theme and wallpaper picker |
+| [myles-calculator](./myles-calculator) | 1.0.1 | — | Modern multi-mode calculator with live FX, units, tip/VAT, history, and programmer tools |
+| [myles-workspaces](./myles-workspaces) | 1.0.0 | `omarchy.workspaces` | Workspace number indicators |
 
 [myles-omarchy-plugins](./myles-omarchy-plugins) is the installer and updater itself.
 
